@@ -70,11 +70,9 @@ Image readImage(const char *file) {
 	// get pixel data
 	int padLength = image.width - (int)(image.width / 4) * 4;
 
-	fseek(f, 54, SEEK_SET);
-
 	for(int i = 0; i < image.height; i++) {
+		fseek(f, 54 + (image.width * 3 + padLength) * i, SEEK_SET);
 		fread(&image.data[i * image.width * 3], image.width * 3, 1, f);
-		fread(NULL, padLength, 1, f);
 	}
 
 	return image;
